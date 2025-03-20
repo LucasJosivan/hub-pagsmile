@@ -3,9 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pagsmile Hub</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: rgb(11, 31, 64);
+            color: rgb(255, 255, 255);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+        }
+        .logo {
+            margin-bottom: 20px;
+        }
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .menu button {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .menu button.active {
+            background-color: rgb(0, 192, 158);
+            color: rgb(255, 255, 255);
+        }
+        .menu button.disabled {
+            background-color: rgb(45, 107, 104);
+            color: rgb(255, 255, 255);
+            cursor: not-allowed;
+        }
+        @media (max-width: 600px) {
+            .menu button {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container">
+        <img class="logo" src="https://pagsmilebank.com.br/storage/2024/08/Logo-Pagsmile-1024x211.png" alt="Pagsmile Logo" width="300">
+        <div class="menu">
+            <button class="active" onclick="window.location.href='https://jessicacs95.github.io/json-interpreter/'">ACH Error Finder</button>
+            <button class="active" onclick="window.open('https://docs.google.com/spreadsheets/d/1EqdRze44gcG3ictAKqW-SSK8oc5M3yNngc4m2i_9aEk/edit?pli=1&gid=0#gid=0', '_blank')">VAT TAX Calculator</button>
+            <button class="disabled" disabled>Transaction Tester</button>
+        </div>
+    </div>
 </body>
 </html>
