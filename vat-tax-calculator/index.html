@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAT TAX Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: rgb(11, 31, 64); /* Fundo escuro */
+            color: rgb(255, 255, 255); /* Texto branco */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 600px; /* Aumenta a largura máxima do formulário */
+            width: 100%;
+            margin: auto;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: rgb(45, 107, 104); /* Fundo do formulário */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: rgb(255, 255, 255); /* Texto branco */
+        }
+        .input-group {
+            display: flex;
+            gap: 10px; /* Espaço entre os inputs */
+            margin-bottom: 15px;
+        }
+        .input-group input {
+            flex: 1; /* Faz com que os inputs ocupem o mesmo espaço */
+            margin-top: 15px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input {
+            background-color: rgb(255, 255, 255); /* Fundo branco */
+            color: rgb(11, 31, 64); /* Texto escuro */
+        }
+        button {
+            background-color: rgb(0, 192, 158); /* Botão ativo */
+            color: rgb(255, 255, 255); /* Texto branco */
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: rgb(0, 160, 130); /* Botão ao passar o mouse */
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: rgb(255, 255, 255); /* Texto branco */
+        }
+        #countrySelection {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .country {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            border: 2px solid rgb(45, 107, 104); /* Borda inicial */
+            border-radius: 5px;
+            padding: 10px;
+            background-color: rgb(11, 31, 64); /* Fundo escuro */
+            color: rgb(255, 255, 255); /* Texto branco */
+            transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
+        }
+        .country:hover {
+            transform: scale(1.05);
+            background-color: rgb(45, 107, 104); /* Fundo ao passar o mouse */
+            border-color: rgb(0, 192, 158); /* Borda ao passar o mouse */
+        }
+        .country img {
+            width: 50px; /* Largura fixa */
+            height: 50px; /* Altura fixa para deixar quadrado */
+            margin-bottom: 5px;
+            object-fit: cover; /* Garante que a imagem se ajuste ao quadrado */
+            border-radius: 5px; /* Opcional: bordas arredondadas */
+        }
+        .country.selected {
+            background-color: rgb(0, 192, 158); /* Fundo do país selecionado */
+            color: rgb(255, 255, 255); /* Texto branco */
+            border-color: rgb(0, 160, 130); /* Borda destacada */
+        }
+        button.main-menu {
+            position: static; /* Remove posicionamento absoluto */
+            margin-top: 15px; /* Alinha à esquerda */
+            padding: 20px; /* Mantém o padding */
+            font-size: 16px; /* Mantém o tamanho da fonte */
+            background-color: rgb(45, 107, 104); /* Mantém o estilo existente */
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button.main-menu:hover {
+            background-color: rgb(0, 160, 130); /* Mantém o hover existente */
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>VAT TAX Calculator</h1>
+        <form id="vatCalculator" onsubmit="event.preventDefault(); calculateVAT();">
+            <label for="region">Select the country:</label>
+            <div id="countrySelection">
+                <div class="country" data-value="16" onclick="selectCountry(this)">
+                    <img src="https://flagdownload.com/wp-content/uploads/Flag_of_Mexico_Flat_Round-128x128.png" alt="México" />
+                    <span>México - 16%</span>
+                </div>
+                <div class="country" data-value="19" onclick="selectCountry(this)">
+                    <img src="https://flagdownload.com/wp-content/uploads/Flag_of_Colombia_Flat_Round-128x128.png" alt="Colômbia" />
+                    <span>Colômbia - 19%</span>
+                </div>
+                <div class="country" data-value="19" onclick="selectCountry(this)">
+                    <img src="https://flagdownload.com/wp-content/uploads/Flag_of_Chile_Flat_Round-128x128.png" alt="Chile" />
+                    <span>Chile - 19%</span>
+                </div>
+                <div class="country" data-value="18" onclick="selectCountry(this)">
+                    <img src="https://flagdownload.com/wp-content/uploads/Flag_of_Peru_Flat_Round-128x128.png" alt="Peru" />
+                    <span>Peru - 18%</span>
+                </div>
+                <div class="country" data-value="13" onclick="selectCountry(this)">
+                    <img src="https://flagdownload.com/wp-content/uploads/Flag_of_Bolivia_Flat_Round-128x128.png" alt="Bolívia" />
+                    <span>Bolívia - 13%</span>
+                </div>
+                <div class="country" data-value="7" onclick="selectCountry(this)">
+                    <img src="https://flagdownload.com/wp-content/uploads/Flag_of_Panama_Flat_Round-128x128.png" alt="Panamá" />
+                    <span>Panamá - 7%</span>
+                </div>
+                <div class="country" data-value="13" onclick="selectCountry(this)">
+                    <img src="https://flagdownload.com/wp-content/uploads/Flag_of_Costa_Rica_Flat_Round-128x128.png" alt="Costa Rica" />
+                    <span>Costa Rica - 13%</span>
+                </div>
+                <div class="country" data-value="12" onclick="selectCountry(this)">
+                    <img src="https://flagdownload.com/wp-content/uploads/Flag_of_Guatemala_Flat_Round-128x128.png" alt="Guatemala" />
+                    <span>Guatemala - 12%</span>
+                </div>
+                <div class="country" data-value="21" onclick="selectCountry(this)">
+                    <img src="https://flagdownload.com/wp-content/uploads/Flag_of_Argentina_Flat_Round-128x128.png" alt="Argentina" />
+                    <span>Argentina - 21%</span>
+                </div>
+                <div class="country" data-value="22" onclick="selectCountry(this)">
+                    <img src="https://flagdownload.com/wp-content/uploads/Flag_of_Uruguay_Flat_Round-128x128.png" alt="Uruguai" />
+                    <span>Uruguai - 22%</span>
+                </div>
+                <div class="country" data-value="15" onclick="selectCountry(this)">
+                    <img src="https://flagdownload.com/wp-content/uploads/Flag_of_Ecuador_Flat_Round-128x128.png" alt="Ecuador" />
+                    <span>Ecuador - 15%</span>
+                </div>
+                <div class="country" data-value="0" onclick="selectCountry(this)">
+                    <img src="https://flagdownload.com/wp-content/uploads/Flag_of_European_Union_Flat_Round-128x128.png" alt="Custom" />
+                    <span>Custom %</span>
+                </div>
+            </div>
+            <input type="hidden" id="region" />
+            <input type="number" id="customTaxInput" placeholder="Enter custom tax (%)" style="display: none; margin-top: 15px;" step="0.01" />
+
+            <div class="input-group">
+                <input type="number" id="processingFeePercent" placeholder="Processing Fee (%)" step="0.01" required>
+                <input type="number" id="processingFeeValue" placeholder="Processing Fee (value) or minimum" step="0.01" required>
+            </div>
+
+            <button type="submit">Calcular</button>
+
+            <div class="result" id="result1"></div>
+            <div class="result" id="result2"></div>
+            <div class="result" id="result3"></div>
+        </form>
+        <button class="main-menu" onclick="window.location.href='../index.html'">Main Menu</button>
+    </div>
+    <script>
+        function selectCountry(element) {
+            const value = element.getAttribute("data-value");
+            document.getElementById("region").value = value;
+
+            const countries = document.querySelectorAll(".country");
+            countries.forEach(country => country.classList.remove("selected"));
+
+            element.classList.add("selected");
+
+            // Show or hide custom tax input
+            const customTaxInput = document.getElementById("customTaxInput");
+            if (value === "0") {
+                customTaxInput.style.display = "block";
+            } else {
+                customTaxInput.style.display = "none";
+                customTaxInput.value = ""; // Clear custom input
+            }
+        }
+
+        function calculateVAT() {
+            let regionVAT = parseFloat(document.getElementById("region").value) / 100;
+            const customTaxInput = document.getElementById("customTaxInput");
+
+            if (customTaxInput.style.display === "block" && customTaxInput.value) {
+                regionVAT = parseFloat(customTaxInput.value) / 100;
+            }
+
+            const processingFeePercent = (parseFloat(document.getElementById("processingFeePercent").value) / 100) * 100;
+            const processingFeeValue = parseFloat(document.getElementById("processingFeeValue").value);
+
+            if (isNaN(regionVAT) || isNaN(processingFeePercent) || isNaN(processingFeeValue)) {
+                alert("Por favor, preencha todos os campos corretamente.");
+                return;
+            }
+
+            const result1 = (processingFeePercent * regionVAT).toFixed(6);
+            const result2 = (processingFeeValue * regionVAT).toFixed(2);
+
+            const formattedResult1 = Number(result1).toString();
+            const formattedResult2 = Number(result2).toString();
+
+            document.getElementById("result1").textContent = `Fee Result: ${formattedResult1}%`;
+            document.getElementById("result2").textContent = `Tax Result: ${formattedResult2}`;
+            document.getElementById("result3").textContent = `Minimum Result: ${formattedResult2}`;
+        }
+    </script>
+</body>
+</html>
